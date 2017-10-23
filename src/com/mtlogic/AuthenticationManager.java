@@ -19,11 +19,6 @@ import org.slf4j.LoggerFactory;
 public class AuthenticationManager {
 	final Logger logger = LoggerFactory.getLogger(AuthenticationManager.class);
 	
-	public static final int CLIENT_276 = 1;
-	public static final int INTERNAL_276 = 2;
-	public static final int PAYOR_277 = 3;
-	public static final int INTERNAL_277 = 4;
-	
 	@Path("/token")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
