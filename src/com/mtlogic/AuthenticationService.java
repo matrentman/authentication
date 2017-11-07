@@ -220,7 +220,7 @@ this.verifyToken(token);
 				envContext = new InitialContext();
 				Context initContext  = (Context)envContext.lookup("java:/comp/env");
 				DataSource ds = null;
-			    ds = (DataSource)initContext.lookup("jdbc/admin");
+				ds = (DataSource)initContext.lookup("jdbc/admin");
 				con = ds.getConnection();
 				
 				preparedStatement = con.prepareStatement(selectSQL);
@@ -370,7 +370,7 @@ this.verifyToken(token);
 			envContext = new InitialContext();
 			Context initContext  = (Context)envContext.lookup("java:/comp/env");
 			DataSource ds = null;
-		    ds = (DataSource)initContext.lookup("jdbc/admin");
+			ds = (DataSource)initContext.lookup("jdbc/admin");
 			con = ds.getConnection();
 			
 			preparedStatement = con.prepareStatement(selectSQL);
@@ -476,7 +476,7 @@ this.verifyToken(token);
 			envContext = new InitialContext();
 			Context initContext  = (Context)envContext.lookup("java:/comp/env");
 			DataSource ds = null;
-		    ds = (DataSource)initContext.lookup("jdbc/admin");
+			ds = (DataSource)initContext.lookup("jdbc/admin");
 			con = ds.getConnection();
 			
 			preparedStatement = con.prepareStatement(selectSQL);
@@ -507,33 +507,33 @@ this.verifyToken(token);
 	
 	private String generateToken(String userName, String clientId) {
 		logger.info(">>>ENTERED generateToken(" + userName + "' " + clientId + ")");
-        String id = UUID.randomUUID().toString().replace("-", "");
-        Date now = new Date();
-        //Date exp = new Date(System.currentTimeMillis() + (1000 * 60)); // 60 seconds
-        //Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60); // 60 minutes
-        //Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60*24); // 24 hours
-        //Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60*24*30); // 30 days
-        Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60*24*265); // 265 days
-        
-        // Temporary for test will store secret in database
-        //    maybe have one secret for each client?+
-        //Key secret = MacProvider.generateKey(SignatureAlgorithm.HS256);
-        //byte[] secretBytes = secret.getEncoded();
-        //String base64SecretBytes = Base64.getEncoder().encodeToString(secretBytes);
-        String base64SecretBytes = "JPLet+DhcjalDLlmhpH4Xi0ivIlzj/ZTZVJvGkMB7e8=";
-        
-        String token = Jwts.builder()
-            .setId(id)
-            .setIssuedAt(now)
-            .setNotBefore(now)
-            .setExpiration(exp)
-            .setSubject(userName + ":" + clientId)
-            .signWith(SignatureAlgorithm.HS256, base64SecretBytes)
-            .compact();
+		String id = UUID.randomUUID().toString().replace("-", "");
+		Date now = new Date();
+		//Date exp = new Date(System.currentTimeMillis() + (1000 * 60)); // 60 seconds
+		//Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60); // 60 minutes
+		//Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60*24); // 24 hours
+		//Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60*24*30); // 30 days
+		Date exp = new Date(System.currentTimeMillis() + (1000 * 60)*60*24*265); // 265 days
 
-        logger.info("<<<EXITED generateToken(" + token + ")");
-        return token;
-    }
+		// Temporary for test will store secret in database
+		//    maybe have one secret for each client?+
+		//Key secret = MacProvider.generateKey(SignatureAlgorithm.HS256);
+		//byte[] secretBytes = secret.getEncoded();
+		//String base64SecretBytes = Base64.getEncoder().encodeToString(secretBytes);
+		String base64SecretBytes = "JPLet+DhcjalDLlmhpH4Xi0ivIlzj/ZTZVJvGkMB7e8=";
+
+		String token = Jwts.builder()
+				.setId(id)
+				.setIssuedAt(now)
+				.setNotBefore(now)
+				.setExpiration(exp)
+				.setSubject(userName + ":" + clientId)
+				.signWith(SignatureAlgorithm.HS256, base64SecretBytes)
+				.compact();
+
+		logger.info("<<<EXITED generateToken(" + token + ")");
+		return token;
+	}
 	
 	public String verifyToken(String token) {
 		logger.info(">>>ENTERED verifyToken(" + token + ")");
@@ -541,16 +541,16 @@ this.verifyToken(token);
 		boolean isValid = false;
 		Claims claims = null;
 		try {
-	        claims = Jwts.parser()
-	            .setSigningKey(base64SecretBytes)
-	            .parseClaimsJws(token).getBody();
-	        if (claims != null) {
-	        	Date now = new Date();
-	        	Date exp = claims.getExpiration();
-	        	if (exp.after(now)) {
-	        		isValid = true;
-	        	}
-	        }
+			claims = Jwts.parser()
+					.setSigningKey(base64SecretBytes)
+					.parseClaimsJws(token).getBody();
+			if (claims != null) {
+				Date now = new Date();
+				Date exp = claims.getExpiration();
+				if (exp.after(now)) {
+					isValid = true;
+				}
+			}
 		} catch (Exception e) {
 			logger.error("ERROR parsing JWToken!!! : " + e.getMessage());
 			e.printStackTrace();
@@ -580,7 +580,7 @@ this.verifyToken(token);
 		}
 
 		logger.info("<<<EXITED verifyToken(" + obj.toString() + ")");
-        return obj.toString();
-    }
+		return obj.toString();
+	}
 
 }
