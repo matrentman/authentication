@@ -481,9 +481,9 @@ this.verifyToken(token);
 			
 			preparedStatement = con.prepareStatement(selectSQL);
 			preparedStatement.setString(1, clientNumber);
-			
+
 			ResultSet rs = preparedStatement.executeQuery();
-			
+
 			if (rs.next()) {
 				clientId = rs.getInt("client_id");
 			}
@@ -497,13 +497,13 @@ this.verifyToken(token);
 			e.printStackTrace();
 			logger.error("ERROR!!! : " + e.getMessage());
 		} finally {
-		    try{preparedStatement.close();}catch(Exception e){};
+			try{preparedStatement.close();}catch(Exception e){};
 		    try{con.close();}catch(Exception e){};
 		}
 
 		logger.info("<<<EXITED lookupClientId(" + clientId + ")");
-        return (clientId);
-    }
+		return (clientId);
+	}
 	
 	private String generateToken(String userName, String clientId) {
 		logger.info(">>>ENTERED generateToken(" + userName + "' " + clientId + ")");
